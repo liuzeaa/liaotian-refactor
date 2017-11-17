@@ -126,7 +126,7 @@ var store = new Vuex.Store({
                                 stars:[],
                                 logo:item.u_logo,
                                 name:item.u_name,
-                                title:item.titile
+                                title:item.title
                             }
                             clean_post.push(temp_obj)
                         }else {

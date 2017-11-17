@@ -1,24 +1,23 @@
 <template>
   <div id="app">
-    <el-row>
-      <el-col :md="3">
+    <el-row :gutter="20">
+      <el-col :span="4">
         <el-menu>
           <el-menu-item
-            v-for="route in $router.options.routes"
+            v-for="(route,index) in $router.options.routes"
             v-if="!route.hidden"
             :index="route.path"
             @click="click(route.path)"
+            key="index"
           >
             {{route.name}}
           </el-menu-item>
         </el-menu>
       </el-col>
-      <el-col :md="19" :push="1">
+      <el-col :span="20">
         <router-view></router-view>
       </el-col>
     </el-row>
-
-
   </div>
 </template>
 

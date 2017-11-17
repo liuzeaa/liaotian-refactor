@@ -1,12 +1,11 @@
-
+import axios from 'Axios';
 
 import request from 'superagent'
 
 export function getMessage(query,cb){
-  request
-    .get('/message')
-    .query(query)
-    .end((err,res)=>{
-      cb(res.body)
-    })
+    axios.get('/message',{params:{query}})
+        .then(res=>{
+            "use strict";
+            cb(res.data)
+        })
 }

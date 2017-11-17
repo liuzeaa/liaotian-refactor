@@ -1,34 +1,32 @@
-
+import axios from 'Axios';
 import request from 'superagent'
 
 
 export function detail(id,cb) {
-  request
-    .get('/post/'+id)
-    .end(function (err,res) {
-      cb(res.body)
-    })
+    axios.get('/post/'+id)
+        .then(res=>{
+            "use strict";
+            cb(res.data)
+        })
 }
 export function addComment(id,obj,cb) {
-  request
-    .post('/post/'+id+'/comment')
-    .send(obj)
-    .end((err,res)=>{
-      cb(res.body)
-    })
+    axios.post('/post/'+id+'/comment',obj)
+        .then(res=>{
+            "use strict";
+            cb(res.data)
+        })
 }
 export function editComment(postId,commentId,obj,cb){
-  request
-    .patch('/post/'+postId+'/comment/'+commentId)
-    .send(obj)
-    .end(function(err,res){
-      cb(res.body)
-    })
+    axios.patch('/post/'+postId+'/comment/'+commentId,obj)
+        .then(res=>{
+            "use strict";
+            cb(res.data)
+        })
 }
 export function deleteComment(postId,commentId,cb){
-  request
-    .delete(host+'post/'+postId+'/comment/'+commentId)
-    .end(function(err,res){
-      cb(res.body)
-    })
+    axios.delete('/post/'+postId+'/comment/'+commentId)
+        .then(res=>{
+            "use strict";
+            cb(res.data);
+        })
 }

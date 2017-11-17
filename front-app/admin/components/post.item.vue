@@ -8,35 +8,21 @@
             <el-button @click="addComment.visible=true">增加评论</el-button>
           </el-form-item>
         </el-form>
-        <el-dialog
+
+       <el-dialog
           title="增加评论"
           :visible="addComment.visible"
           :before-close="handleClose"
         >
-          <el-form>
-            <el-form-item  label="内容" label-width="50px">
-              <el-input v-model="addComment.content"></el-input>
-            </el-form-item>
-          </el-form>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="addComment.visible=false">取 消</el-button>
-          <el-button type="primary" @click="handleAddComment">确 定</el-button>
-        </span>
+           <form-content :content="addComment.content" @cancel="addComment.visible=false" @save="handleAddComment"></form-content>
         </el-dialog>
       <el-dialog
         title="编辑评论"
         :visible="editComment.visible"
         :before-close="handleClose"
       >
-        <el-form>
-          <el-form-item  label="内容" label-width="50px">
-            <el-input v-model="editComment.content"></el-input>
-          </el-form-item>
-        </el-form>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="editComment.visible=false">取 消</el-button>
-          <el-button type="primary" @click="saveEditComment">确 定</el-button>
-        </span>
+          <form-content :content="editComment.content" @cancel="editComment.visible=false" @save="saveEditComment"></form-content>
+
       </el-dialog>
         <el-table :data="comments">
           <el-table-column label="content" prop="content"></el-table-column>
@@ -58,7 +44,8 @@
 
 </style>
 <script>
-import {detail,editComment,deleteComment,addComment} from './post.item.api'
+import {detail,editComment,deleteComment,addComment} from './post.item.api';
+import formContent  from './dialog.vue'
     export default{
         name:"post-item",
         data(){
@@ -77,6 +64,9 @@ import {detail,editComment,deleteComment,addComment} from './post.item.api'
                   content:''
                 }
             }
+        },
+        components:{
+            formContent
         },
         methods:{
           fetch(){
@@ -117,9 +107,9 @@ import {detail,editComment,deleteComment,addComment} from './post.item.api'
                 cancelButtonText: '取消',
                 type: 'warning'
               }).then(() => {
+
                 deleteComment(this.id,commentId,(item)=>{
                   this.comments = this.comments.filter(obj=>{
-                  debugger;
                     return obj.id != item.id
                   })
                   this.$message({

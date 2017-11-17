@@ -83,7 +83,7 @@ router.get('/:id/post_detail',(req,res)=>{
         stars.userId as s_u_id
         FROM posts LEFT JOIN comments ON comments.postId = posts.id LEFT JOIN stars ON stars.postId = posts.id
         LEFT JOIN users ON posts.userId = users.id
-        WHERE posts.userId IN (SELECT friendId FROM relations WHERE relations.userId=${req.params.id})
+        WHERE posts.userId IN (SELECT relations.friendId FROM relations WHERE relations.userId=${req.params.id})
         OR posts.userId IN (SELECT relations.userId FROM relations WHERE relations.friendId=${req.params.id})
     `,{
         model:model.Post
